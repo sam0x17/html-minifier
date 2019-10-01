@@ -43,5 +43,3 @@ module HtmlMinifier
     @@ctx.get_string(-1).not_nil!
   end
 end
-
-puts HtmlMinifier.minify!("<html>          <head><title> yay</title></head><body> omg        \n\n\n</body></html>")
