@@ -7,3 +7,11 @@ authors:
 crystal: 0.31.0
 
 license: MIT
+
+dependencies:
+  duktape:
+    github: jessedoyle/duktape.cr
+    version: ~> 0.18.1
+  baked_file_system:
+    github: schovi/baked_file_system
+    version: ~> 0.9.8

@@ -1,8 +1,6 @@
 require "./spec_helper"
 
-describe Html::Minifier do
-  # TODO: Write tests
-
+describe HtmlMinifier do
   it "works" do
     false.should eq(true)
   end

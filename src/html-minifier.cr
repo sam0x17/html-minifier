@@ -1,6 +1,5 @@
-# TODO: Write documentation for `Html::Minifier`
-module Html::Minifier
-  VERSION = "0.1.0"
+require "duktape"
 
-  # TODO: Put your code here
+module HtmlMinifier
+
 end
