@@ -38,4 +38,16 @@ describe HtmlMinifier do
     HtmlMinifier.set_options("{\"removeComments\":false}")
     HtmlMinifier.minify!("<html><!-- comment --></html>").should eq "<html><!-- comment --></html>"
   end
+
+  it "handles usage example 1 correctly" do
+    HtmlMinifier.minify!("<html>  <body>minify  me!</body></html>").should eq "<html> <body>minify me!</body></html>"
+  end
+
+  it "handles usage example 2 correctly" do
+    HtmlMinifier.minify!("<style>body { background-color: black }</style>").should eq "<style>body{background-color:#000}</style>"
+  end
+
+  it "handles usage example 3 correctly" do
+    HtmlMinifier.minify!("<script> alert('hello world');</script>").should eq "<script>alert(\"hello world\")</script>"
+  end
 end

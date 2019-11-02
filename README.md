@@ -1,6 +1,20 @@
 # html-minifier
 
-TODO: Write a description here
+html-minifier embeds the widely-used [html-minifier](https://www.npmjs.com/package/html-minifier)
+NPM package in an easy-to-use Crystal shard via [duktape.cr](https://github.com/svaarala/duktape),
+which provides a fast, embedded Javascript execution environment within Crystal.
+
+html-minifier can be used to minify arbitrary HTML content, including Javascript and/or CSS.
+
+Some features:
+* minifies HTML and any embedded CSS/Javascript within the HTML
+* no non-Crystal dependencies (no Node.js or NPM required)
+* all html-minifier Javascript is baked into the shard, so you won't need to package any extra files with your app/tool/library
+* doesn't embed an entire Node.js runtime (Javascript is executed via duktape.cr)
+* simple, Crystal-based API (`HtmlMinifier.minify!("source code")`
+* full support for html-minifier [options](https://github.com/kangax/html-minifier#options-quick-reference) via `HtmlMinifier.set_options`
+* sane, one-size-fits-all options are included by default (unlike html-minifier on NPM)
+
 
 ## Installation
 
@@ -9,31 +23,49 @@ TODO: Write a description here
    ```yaml
    dependencies:
      html-minifier:
-       github: your-github-user/html-minifier
+       github: sam0x17/html-minifier
    ```
 
 2. Run `shards install`
 
-## Usage
+## Minification
 
 ```crystal
 require "html-minifier"
+
+HtmlMinifier.minify!("<html>  <body>minify  me!</body></html>") # => "<html> <body>minify me!</body></html>"
+HtmlMinifier.minify!("<style>body { background-color: black }</style>") # => "<style>body{background-color:#000}</style>"
+HtmlMinifier.minify!("<script> alert('hello world');</script>") # => "<script>alert(\"hello world\")</script>"
 ```
 
-TODO: Write usage instructions here
+## Configuration
+All options supported by html-minifier on NPM are supported by this shard. Options can be specified
+by a `JSON::Any` object or by a JSON string, as shown below.
 
-## Development
+```crystal
+require "html-minifier"
 
-TODO: Write development instructions here
+HtmlMinifier.minify!("<html><!-- comment --></html>") # => "<html></html>"
 
-## Contributing
+HtmlMinifier.set_options("{\"removeComments\": false}")
 
-1. Fork it (<https://github.com/your-github-user/html-minifier/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+HtmlMinifier.minify!("<html><!-- comment --></html>") # => "<html><!-- comment --></html>"
+```
 
-## Contributors
+Note that user-specified options will override their respective default values. The default
+values for all options are shown below:
 
-- [Sam Johnson](https://github.com/your-github-user) - creator and maintainer
+```json
+{
+  "caseSensitive": true,
+  "conservativeCollapse": true,
+  "minifyCSS": true,
+  "minifyJS": true,
+  "useShortDoctype": true,
+  "removeTagWhitespace": true,
+  "removeScriptTypeAttributes": true,
+  "removeComments": true,
+  "collapseWhitespace": true,
+  "collapseInlineTagWhitespace": true,
+}
+```
