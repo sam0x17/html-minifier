@@ -1,7 +1,7 @@
 require "duktape"
 require "json"
 
-HTML_MINIFIER_JS = {{read_file("html-minifier/html-minifier.min.js")}}
+HTML_MINIFIER_JS = {{read_file("#{__DIR__}/../html-minifier/html-minifier.min.js")}}
 
 DEFAULT_OPTIONS = <<-JS
   var options = {
